@@ -1,4 +1,4 @@
-const INITIAL_FETCH_LIMIT = 2000
+const INITIAL_FETCH_LIMIT = 500
 let [accounts, accountHistory, delegations, dynamicGlobalProperties] = []
 let delegationHistory
 let sbdPrice, steemPrice = 0
@@ -206,14 +206,14 @@ $(function(){
 
 function roi(delegation){
 	let transfers = delegation.transfers
-	let daysDelegated = delegation.endDate.diff(delegation.startDate, 'days') + 1
+	let daysDelegated = delegation.endDate.diff(delegation.startDate, 'days')
 	let earnedSteem = 0
 	let earnedSBD = 0
 	let apr = 0
 	let transfer_counter = 0
 	transfers.forEach((transfer) => {
 		//ignore first transfer
-		if (transfer_counter > 0) {
+		if (transfer_counter >= 0) {
 			let splits = transfer[1].op[1].amount.split(' ', 2)
 				if (splits[1] === 'SBD') {
 					earnedSBD += Number(splits[0])
